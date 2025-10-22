@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "type": "module"
   },
   "repository": {
     "type": "git",
@@ -24,5 +26,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1",
     "nodemailer": "^7.0.9"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2"
   }
 }
