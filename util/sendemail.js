@@ -1,32 +1,20 @@
-// util/sendemail.js
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
 
-export const sendEmail = async (to, subject, text, html) => {
-  try {
-    // 🔹 Create transporter inside the function (recommended)
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.PASS_MAIL,
-        pass: process.env.GOOGLE_APP_PASSWORD,
-      },
-    });
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 465,          // secure port
+  secure: true,       // true for 465
+  auth: {
+    user: process.env.PASS_MAIL,
+    pass: process.env.GOOGLE_APP_PASSWORD,
+  },
+});
 
-    const mailOptions = {
-      from: `"Auth Project" <${process.env.PASS_MAIL}>`,
-      to,
-      subject,
-      text,
-      html,
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log("✅ Email sent successfully:", info.response);
-    return info;
-  } catch (error) {
-    console.error("❌ Error sending email:", error.message);
-    throw error;
+// Optional: verify connection before sending
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("SMTP connection failed:", error);
+  } else {
+    console.log("✅ SMTP server is ready to send emails");
   }
-};
+});
