@@ -1,24 +1,26 @@
-import express from 'express'
+import express from "express";
 import mongoose from "mongoose";
-import dotenv from 'dotenv';
-import router from './route/authroute.js'
+import dotenv from "dotenv";
+import router from "./route/authroute.js";
 
 dotenv.config();
-const app= express();
+
+const app = express();
+
+// Middleware
 app.use(express.json());
 
+// Connect to MongoDB using .env
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log(" DB Connected"))
+  .catch((err) => console.error(" DB Error:", err));
 
-const jwt=process.env.JWT_SECRET;
-const Mongoo_url=process.env.MONGO_URL;
-mongoose
-        
-  .connect(process.env.MONGO_URL)
-  .then(() => console.log(" MongoDB connected"))
-  .catch((err) => console.log(" DB Error:", err));
+// Routes
+app.use("/api/auth", router);
 
+// Server
+const PORT = process.env.PORT || 5000;
 
-app.use('/api/auth',router);
-app.listen(process.env.PORT, ()=>
- console.log("server on ")
-);
-
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
