@@ -20,6 +20,7 @@ dotenv.config();
         const data= new User({name,email,password:hashed});
         console.log("data is saved");
         await data.save();
+        console.log("Saving user:", data);
         // res.status(200).json({msg:"data saved" });
         res.json({
           msg: "data saved",
@@ -46,8 +47,14 @@ export const  login= async(req,res)=>
 
       const token= jwt.sign({id:user._id,email:user.email,name: user.name},process.env.JWT_SECRET,{expiresIn:"1h" });
 
-      res.status(200).json({msg:"user login sucessfully",token});
-
+    res.status(200).json({
+            msg: "user login successfully",
+            token,
+            user: {
+                name: user.name,
+                email: user.email
+                      }
+                    });
         }
         catch(error)
         {
