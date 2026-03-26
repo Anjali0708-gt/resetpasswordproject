@@ -13,7 +13,9 @@ dotenv.config();
     {
         const{name,email,password}=req.body;
         const exist=await User.findOne({email})
-        if(exist) return res.status(500).json({msg:"user already resgiter"});
+       if (exist) {
+           return res.status(400).json({ msg: "User already registered" });
+}
         const hashed=await bcrypt.hash(password,10);
         const data= new User({name,email,password:hashed});
         await data.save();
