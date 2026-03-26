@@ -18,8 +18,13 @@ dotenv.config();
 }
         const hashed=await bcrypt.hash(password,10);
         const data= new User({name,email,password:hashed});
+        console.log("data is saved");
         await data.save();
-        res.status(200).json({msg:"data saved" });
+        // res.status(200).json({msg:"data saved" });
+        res.json({
+          msg: "data saved",
+         user: { name, email }
+            });
     }
 
   catch (error) {
