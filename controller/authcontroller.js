@@ -67,6 +67,7 @@ export const  login= async(req,res)=>
         {
           const{email}=req.body;
           const user= await User.findOne({email});
+          console.log("User:", user);
          
           
  if (!user) 
