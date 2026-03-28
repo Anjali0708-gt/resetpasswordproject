@@ -70,8 +70,8 @@ export const  login= async(req,res)=>
          
           
           if (!user) {
-            return res.status(200).json({
-             msg: "If email exists, reset link sent"
+            return res.status(500).json({
+             msg: "not exist"
                  });
 }
         //   token generation
