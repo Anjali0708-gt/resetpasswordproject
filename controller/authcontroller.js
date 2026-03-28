@@ -68,7 +68,12 @@ export const  login= async(req,res)=>
           const{email}=req.body;
           const user= await User.findOne({email});
          
-          if (!user) return res.status(404).json({ msg: "user not registered" });
+          
+          if (!user) {
+            return res.status(200).json({
+             msg: "If email exists, reset link sent"
+                 });
+}
         //   token generation
           const token= jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1h" });
           const link = `http://localhost:5173/reset-password/${token}`;
@@ -82,10 +87,10 @@ export const  login= async(req,res)=>
          res.status(201).json({msg:"reset password send to your email "})
 
         }
-        catch(error)
-        {
-
-        }
+        catch (error) {
+           console.log("Forget password error:", error);
+              res.status(500).json({ msg: error.message });
+              }
     }
 
     export const resetpassword= async(req,res)=>
