@@ -69,7 +69,8 @@ export const  login= async(req,res)=>
           const user= await User.findOne({email});
          
           
- if (!user) return res.status(404).json({ msg: "user not registered" })
+ if (!user) 
+  {return res.status(404).json({ msg: "user not registered" })}
         //   token generation
           const token= jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1h" });
           // const link = `http://localhost:5173/reset-password/${token}`;
