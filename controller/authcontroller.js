@@ -76,7 +76,8 @@ export const  login= async(req,res)=>
 }
         //   token generation
           const token= jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:"1h" });
-          const link = `http://localhost:5173/reset-password/${token}`;
+          // const link = `http://localhost:5173/reset-password/${token}`;
+          const link = `https://your-frontend-url.onrender.com/reset-password/${token}`;
           const html = `
         <h2>Hello ${user.name},</h2>
          <p>Click below to reset your password:</p>
